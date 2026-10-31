@@ -1,0 +1,768 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#10100e">
+<meta name="description" content="THE NAIJA ARCHIVE — A cinematic journey through Nigerian internet culture, music, memes, comedy and unforgettable moments.">
+<title>THE NAIJA ARCHIVE — We Were All There</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg:#10100e;
+  --panel:#191916;
+  --gold:#d4aa64;
+  --cream:#eee8dc;
+  --muted:#858178;
+  --line:rgba(238,232,220,.14);
+  --mono:'DM Mono',monospace;
+  --sans:'DM Sans',sans-serif;
+  --serif:'Playfair Display',serif;
+}
+* {box-sizing:border-box;margin:0;padding:0}
+html {scroll-behavior:smooth;scroll-padding-top:90px}
+body {
+  background:var(--bg);
+  color:var(--cream);
+  font-family:var(--sans);
+  overflow-x:hidden;
+}
+body.loading {overflow:hidden}
+::selection {background:var(--gold);color:#10100e}
+a {color:inherit;text-decoration:none}
+button {font:inherit;color:inherit;cursor:pointer}
+.noise {
+  position:fixed;inset:0;z-index:20;pointer-events:none;
+  opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+}
+.progress {
+  position:fixed;top:0;left:0;width:0;height:2px;
+  background:var(--gold);z-index:1000;
+}
+header {
+  position:fixed;top:0;left:0;width:100%;z-index:100;
+  height:76px;padding:0 6%;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid transparent;
+  transition:.35s;
+}
+header.scrolled {
+  background:rgba(16,16,14,.92);
+  backdrop-filter:blur(18px);
+  border-color:var(--line);
+}
+.logo {
+  font-weight:800;letter-spacing:-1.5px;font-size:17px;
+}
+.logo span {color:var(--gold)}
+.nav {display:flex;align-items:center;gap:32px}
+.nav a {
+  font-family:var(--mono);font-size:10px;
+  letter-spacing:1px;color:#aaa59b;transition:.3s;
+}
+.nav a:hover {color:var(--gold)}
+.nav-cta {
+  border:1px solid rgba(212,170,100,.55);
+  padding:12px 18px;color:var(--gold)!important;
+}
+.menu-btn {
+  display:none;background:none;border:0;
+  font-size:22px;color:var(--cream);
+}
+.hero {
+  min-height:100svh;position:relative;
+  display:flex;align-items:center;
+  padding:130px 9% 90px;overflow:hidden;
+}
+.hero::before {
+  content:"";position:absolute;width:650px;height:650px;
+  right:-170px;top:5%;
+  background:radial-gradient(circle,rgba(139,95,43,.16),transparent 68%);
+  pointer-events:none;
+}
+.hero-grid {
+  position:absolute;inset:0;opacity:.14;
+  background-image:
+    linear-gradient(rgba(212,170,100,.14) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(212,170,100,.14) 1px,transparent 1px);
+  background-size:75px 75px;
+  mask-image:linear-gradient(to bottom,black,transparent 85%);
+}
+.hero-content {position:relative;z-index:2;max-width:1000px}
+.eyebrow {
+  font-family:var(--mono);font-size:10px;
+  letter-spacing:3px;color:var(--gold);
+  display:flex;align-items:center;gap:12px;
+}
+.eyebrow::before {content:"";width:26px;height:1px;background:var(--gold)}
+.hero h1 {
+  font-size:clamp(65px,12vw,155px);
+  line-height:.86;letter-spacing:-.085em;
+  font-weight:800;margin:36px 0 25px;
+}
+.hero h1 span {
+  display:block;color:var(--gold);
+  font-family:var(--serif);font-style:italic;
+  font-weight:600;letter-spacing:-.075em;
+}
+.hero-description {
+  color:#a8a399;max-width:440px;
+  line-height:1.8;font-size:14px;
+}
+.hero-bottom {
+  margin-top:54px;display:flex;align-items:center;gap:30px;flex-wrap:wrap;
+}
+.primary-btn {
+  background:var(--gold);color:#17130d;
+  border:0;padding:17px 25px;
+  font-family:var(--mono);font-size:10px;
+  letter-spacing:1.5px;font-weight:500;
+  transition:.3s;
+}
+.primary-btn:hover {background:#f0cf91;transform:translateY(-3px)}
+.text-btn {
+  font-family:var(--mono);font-size:10px;
+  color:#aaa59b;letter-spacing:1px;
+}
+.text-btn:hover {color:var(--gold)}
+.hero-index {
+  position:absolute;right:8%;bottom:12%;
+  font-family:var(--mono);font-size:10px;
+  color:#6e6a61;letter-spacing:2px;
+}
+.hero-index strong {color:var(--gold);font-size:17px}
+.hero-stamp {
+  position:absolute;right:12%;top:30%;
+  width:180px;height:180px;border:1px solid rgba(212,170,100,.2);
+  border-radius:50%;display:grid;place-items:center;
+  color:rgba(212,170,100,.45);
+  font-family:var(--mono);font-size:9px;letter-spacing:3px;
+  transform:rotate(-18deg);
+}
+.hero-stamp::before {
+  content:"";position:absolute;inset:12px;
+  border:1px dashed rgba(212,170,100,.25);border-radius:50%;
+}
+.marquee {
+  overflow:hidden;border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  padding:17px 0;background:#151512;
+}
+.marquee-track {
+  display:flex;width:max-content;
+  animation:marquee 35s linear infinite;
+}
+.marquee span {
+  font-family:var(--mono);font-size:10px;
+  letter-spacing:3px;color:#aaa59b;padding:0 28px;
+}
+.marquee b {color:var(--gold);font-weight:400}
+@keyframes marquee {to{transform:translateX(-50%)}}
+.section {padding:125px 9%;position:relative}
+.section-label {
+  color:var(--gold);font-family:var(--mono);
+  font-size:10px;letter-spacing:2px;margin-bottom:22px;
+}
+.section-heading {
+  font-size:clamp(38px,6vw,76px);
+  line-height:1.02;letter-spacing:-.06em;
+  font-weight:700;max-width:750px;
+}
+.section-heading em {
+  color:var(--gold);font-family:var(--serif);
+  font-weight:600;
+}
+.section-intro {
+  color:var(--muted);font-size:14px;
+  line-height:1.9;max-width:500px;margin-top:22px;
+}
+.intro-row {
+  display:flex;justify-content:space-between;
+  align-items:flex-end;gap:35px;
+}
+.intro-number {
+  font-family:var(--serif);font-size:100px;
+  color:rgba(212,170,100,.12);line-height:.8;
+}
+.timeline {margin-top:90px;position:relative}
+.timeline::before {
+  content:"";position:absolute;left:9px;top:10px;bottom:10px;
+  width:1px;background:linear-gradient(var(--gold),rgba(212,170,100,.05));
+}
+.era {
+  position:relative;padding:0 0 90px 55px;
+  display:grid;grid-template-columns:1fr 1fr;gap:55px;
+}
+.era:last-child {padding-bottom:0}
+.era::before {
+  content:"";position:absolute;left:3px;top:8px;
+  width:13px;height:13px;border-radius:50%;
+  background:var(--bg);border:2px solid var(--gold);
+  box-shadow:0 0 18px rgba(212,170,100,.35);
+}
+.era-year {
+  font-family:var(--serif);font-size:clamp(40px,6vw,75px);
+  color:var(--gold);letter-spacing:-4px;line-height:1;
+}
+.era-sub {
+  font-family:var(--mono);font-size:9px;
+  letter-spacing:2px;color:var(--muted);margin-top:13px;
+}
+.era-title {
+  font-size:25px;letter-spacing:-1px;margin-bottom:14px;
+}
+.era-copy {font-size:13px;color:#969187;line-height:1.9}
+.era-tags {display:flex;flex-wrap:wrap;gap:8px;margin-top:23px}
+.tag {
+  border:1px solid var(--line);padding:8px 11px;
+  font-family:var(--mono);font-size:9px;color:#b7b0a3;
+}
+.era-detail {
+  margin-top:22px;background:none;border:0;
+  color:var(--gold);font-family:var(--mono);
+  font-size:9px;letter-spacing:1.5px;
+}
+.era-extra {
+  display:none;margin-top:17px;padding:18px;
+  border-left:1px solid var(--gold);
+  background:rgba(212,170,100,.045);
+  color:#b7b0a3;font-size:12px;line-height:1.8;
+}
+.era-extra.open {display:block;animation:reveal .4s ease}
+@keyframes reveal {from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.dark-band {
+  background:#181814;padding:120px 9%;
+  position:relative;overflow:hidden;
+}
+.dark-band::after {
+  content:"NAIJA";position:absolute;right:-30px;bottom:-85px;
+  font-size:clamp(120px,24vw,340px);font-weight:800;
+  color:rgba(255,255,255,.018);letter-spacing:-.1em;
+  pointer-events:none;
+}
+.dark-band .section-heading {position:relative;z-index:1}
+.category-grid {
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--line);
+  border:1px solid var(--line);margin-top:55px;
+}
+.category {
+  min-height:230px;padding:30px;
+  background:var(--bg);position:relative;
+  transition:.4s;overflow:hidden;
+}
+.category:hover {background:#201f19}
+.category-number {
+  font-family:var(--mono);font-size:10px;color:var(--gold);
+}
+.category-icon {
+  font-size:27px;margin:25px 0 18px;
+  filter:grayscale(1);transition:.3s;
+}
+.category:hover .category-icon {filter:none;transform:scale(1.15)}
+.category h3 {font-size:20px;letter-spacing:-.5px}
+.category p {color:var(--muted);font-size:12px;line-height:1.7;margin-top:9px}
+.category-arrow {
+  position:absolute;right:25px;bottom:25px;
+  color:var(--gold);font-size:20px;
+}
+.archive-section {padding:125px 9%}
+.archive-top {
+  display:flex;justify-content:space-between;
+  align-items:flex-end;gap:25px;flex-wrap:wrap;
+}
+.filters {display:flex;gap:8px;flex-wrap:wrap;margin-top:40px}
+.filter {
+  background:none;border:1px solid var(--line);
+  padding:10px 14px;font-family:var(--mono);
+  font-size:9px;letter-spacing:1px;color:#aaa59b;
+  transition:.25s;
+}
+.filter.active,.filter:hover {
+  background:var(--gold);color:#17130d;border-color:var(--gold);
+}
+.archive-grid {
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:16px;margin-top:28px;
+}
+.archive-card {
+  min-height:250px;border:1px solid var(--line);
+  padding:25px;background:linear-gradient(145deg,#1c1c18,#131310);
+  position:relative;display:flex;flex-direction:column;
+  justify-content:space-between;transition:.35s;
+  overflow:hidden;
+}
+.archive-card:hover {transform:translateY(-5px);border-color:rgba(212,170,100,.5)}
+.archive-card::after {
+  content:"";position:absolute;width:160px;height:160px;
+  right:-65px;top:-65px;border-radius:50%;
+  background:radial-gradient(circle,rgba(212,170,100,.1),transparent 70%);
+}
+.card-meta {
+  display:flex;justify-content:space-between;
+  font-family:var(--mono);font-size:9px;
+  color:var(--gold);letter-spacing:1px;
+}
+.card-art {
+  font-family:var(--serif);font-size:48px;
+  color:rgba(212,170,100,.55);font-style:italic;
+}
+.archive-card h3 {font-size:19px;margin-bottom:9px}
+.archive-card p {font-size:11px;line-height:1.7;color:var(--muted)}
+.empty-message {
+  display:none;padding:35px;text-align:center;
+  color:var(--muted);font-family:var(--mono);font-size:11px;
+}
+.quote-section {
+  padding:145px 9%;text-align:center;
+  background:#181814;position:relative;overflow:hidden;
+}
+.quote-mark {
+  color:var(--gold);font-family:var(--serif);
+  font-size:100px;line-height:.7;
+}
+.quote-section blockquote {
+  max-width:850px;margin:30px auto;
+  font-family:var(--serif);font-size:clamp(29px,5vw,58px);
+  line-height:1.2;letter-spacing:-1.5px;
+}
+.quote-section blockquote em {color:var(--gold)}
+.quote-caption {
+  font-family:var(--mono);font-size:9px;
+  color:var(--muted);letter-spacing:2px;
+}
+.final-section {
+  min-height:75vh;padding:140px 9%;
+  display:flex;flex-direction:column;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.final-section::before {
+  content:"";position:absolute;right:-120px;bottom:-200px;
+  width:550px;height:550px;border:1px solid rgba(212,170,100,.13);
+  border-radius:50%;box-shadow:0 0 0 45px rgba(212,170,100,.025),0 0 0 90px rgba(212,170,100,.02);
+}
+.final-section h2 {
+  font-size:clamp(60px,11vw,130px);
+  line-height:.88;letter-spacing:-.08em;
+}
+.final-section h2 span {
+  font-family:var(--serif);font-style:italic;
+  color:var(--gold);font-weight:600;
+}
+.final-section p {
+  max-width:430px;color:var(--muted);
+  font-size:13px;line-height:1.8;margin:28px 0;
+}
+footer {
+  padding:30px 9%;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;
+  gap:20px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:9px;
+  letter-spacing:1px;color:var(--muted);
+}
+footer strong {color:var(--gold);font-weight:400}
+.reveal {
+  opacity:0;transform:translateY(35px);
+  transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1);
+}
+.reveal.visible {opacity:1;transform:translateY(0)}
+.delay-1 {transition-delay:.12s}
+.delay-2 {transition-delay:.24s}
+.delay-3 {transition-delay:.36s}
+@media(max-width:800px) {
+  header {height:65px;padding:0 6%}
+  .nav {
+    display:none;position:absolute;top:65px;left:0;width:100%;
+    padding:25px 7%;background:#151512;
+    flex-direction:column;align-items:flex-start;gap:23px;
+    border-bottom:1px solid var(--line);
+  }
+  .nav.open {display:flex}
+  .menu-btn {display:block}
+  .hero {padding:130px 7% 100px;min-height:94svh}
+  .hero h1 {font-size:clamp(65px,17vw,110px)}
+  .hero-stamp {width:110px;height:110px;right:7%;top:17%;font-size:7px;opacity:.55}
+  .hero-index {right:7%;bottom:5%}
+  .section,.archive-section {padding:90px 7%}
+  .intro-row {align-items:flex-start}
+  .intro-number {font-size:65px}
+  .era {grid-template-columns:1fr;gap:22px;padding-left:38px;padding-bottom:65px}
+  .era-year {font-size:58px}
+  .dark-band {padding:90px 7%}
+  .category-grid {grid-template-columns:repeat(2,1fr)}
+  .category {min-height:210px;padding:20px}
+  .archive-grid {grid-template-columns:repeat(2,1fr)}
+  .archive-card {min-height:230px;padding:19px}
+  .quote-section {padding:110px 7%}
+  .final-section {padding:110px 7%;min-height:65vh}
+  footer {padding:25px 7%}
+}
+@media(max-width:480px) {
+  .hero-description {font-size:13px}
+  .hero-bottom {gap:20px;margin-top:37px}
+  .hero-stamp {top:15%;right:5%;width:85px;height:85px}
+  .intro-number {display:none}
+  .category-grid {grid-template-columns:1fr 1fr}
+  .category {min-height:195px;padding:17px}
+  .category h3 {font-size:17px}
+  .category p {font-size:11px}
+  .archive-grid {grid-template-columns:1fr 1fr;gap:9px}
+  .archive-card {min-height:220px;padding:15px}
+  .archive-card h3 {font-size:16px}
+  .archive-card p {font-size:10px}
+  .card-art {font-size:38px}
+  .card-meta {font-size:8px}
+  .filter {padding:9px 10px;font-size:8px}
+}
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after {
+    scroll-behavior:auto!important;
+    animation-duration:.01ms!important;
+    transition-duration:.01ms!important;
+  }
+  .reveal {opacity:1;transform:none}
+}
+</style>
+</head>
+
+<body class="loading">
+<div class="noise"></div>
+<div class="progress" id="progress"></div>
+
+<header id="header">
+  <a href="#home" class="logo">THE NAIJA <span>ARCHIVE.</span></a>
+  <nav class="nav" id="nav">
+    <a href="#timeline">THE ERAS</a>
+    <a href="#culture">CULTURE</a>
+    <a href="#archive">THE ARCHIVE</a>
+    <a href="#about" class="nav-cta">OUR STORY ↗</a>
+  </nav>
+  <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">☰</button>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="eyebrow">AN ARCHIVE OF WHO WE ARE</div>
+    <h1>THE NAIJA <span>ARCHIVE.</span></h1>
+    <p class="hero-description">
+      Before the trends disappeared. Before the memes became history.
+      Before the internet moved on. We were there.
+      This is a journey through the moments that made Nigerian culture unforgettable.
+    </p>
+    <div class="hero-bottom">
+      <a href="#timeline" class="primary-btn">ENTER THE ARCHIVE ↗</a>
+      <a href="#culture" class="text-btn">EXPLORE CULTURE ↓</a>
+    </div>
+  </div>
+  <div class="hero-stamp">EST. 2000 · NIGERIA · EST. 2000</div>
+  <div class="hero-index"><strong>001</strong> / THE BEGINNING</div>
+</section>
+
+<div class="marquee">
+  <div class="marquee-track">
+    <span>MEMES <b>✳</b></span><span>MUSIC <b>✳</b></span>
+    <span>COMEDY <b>✳</b></span><span>POP CULTURE <b>✳</b></span>
+    <span>VIRAL MOMENTS <b>✳</b></span><span>SLANG <b>✳</b></span>
+    <span>MEMES <b>✳</b></span><span>MUSIC <b>✳</b></span>
+    <span>COMEDY <b>✳</b></span><span>POP CULTURE <b>✳</b></span>
+    <span>VIRAL MOMENTS <b>✳</b></span><span>SLANG <b>✳</b></span>
+  </div>
+</div>
+
+<section class="section" id="timeline">
+  <div class="intro-row reveal">
+    <div>
+      <div class="section-label">01 / THE JOURNEY</div>
+      <h2 class="section-heading">EVERY ERA HAS<br>ITS <em>STORY.</em></h2>
+      <p class="section-intro">
+        Different generations. Different platforms. Different ways of making noise.
+        One culture that never stops evolving.
+      </p>
+    </div>
+    <div class="intro-number">01</div>
+  </div>
+
+  <div class="timeline">
+    <article class="era reveal">
+      <div>
+        <div class="era-year">2000—09</div>
+        <div class="era-sub">CHAPTER 01 / THE FOUNDATION</div>
+      </div>
+      <div>
+        <h3 class="era-title">Before the timeline.</h3>
+        <p class="era-copy">Internet cafés. Nokia phones. Home videos. Nollywood DVDs. Music videos on television. The early days of connecting, sharing and discovering culture online.</p>
+        <div class="era-tags"><span class="tag">NOLLYWOOD</span><span class="tag">2GO</span><span class="tag">NOKIA</span><span class="tag">MUSIC</span></div>
+        <button class="era-detail">EXPLORE THIS ERA +</button>
+        <div class="era-extra">A generation remembers the sound of a dial-up connection, the excitement of a new ringtone and the ritual of sharing music and videos. This chapter explores the foundations of Nigeria's digital culture.</div>
+      </div>
+    </article>
+
+    <article class="era reveal">
+      <div>
+        <div class="era-year">2010—15</div>
+        <div class="era-sub">CHAPTER 02 / THE TAKEOVER</div>
+      </div>
+      <div>
+        <h3 class="era-title">Everybody was online.</h3>
+        <p class="era-copy">BlackBerry culture, BBM broadcasts, Twitter conversations, Instagram beginnings and Nigerian music reaching a bigger audience.</p>
+        <div class="era-tags"><span class="tag">BBM</span><span class="tag">TWITTER</span><span class="tag">AFROBEATS</span><span class="tag">INSTAGRAM</span></div>
+        <button class="era-detail">EXPLORE THIS ERA +</button>
+        <div class="era-extra">This was the era of changing profile pictures, exchanging PINs, discovering new artists and watching social media become part of everyday Nigerian life.</div>
+      </div>
+    </article>
+
+    <article class="era reveal">
+      <div>
+        <div class="era-year">2016—19</div>
+        <div class="era-sub">CHAPTER 03 / MEME CULTURE</div>
+      </div>
+      <div>
+        <h3 class="era-title">The internet had no chill.</h3>
+        <p class="era-copy">Viral reactions, online banter, Instagram skits, Twitter NG humour, dance challenges and comedy that travelled far beyond Nigeria.</p>
+        <div class="era-tags"><span class="tag">MEMES</span><span class="tag">SKITS</span><span class="tag">TWITTER NG</span><span class="tag">DANCE</span></div>
+        <button class="era-detail">EXPLORE THIS ERA +</button>
+        <div class="era-extra">A golden period of internet humour and creativity. Nigerian creators built audiences through short videos, comedy sketches, reactions and jokes that became part of everyday conversations.</div>
+      </div>
+    </article>
+
+    <article class="era reveal">
+      <div>
+        <div class="era-year">2020—22</div>
+        <div class="era-sub">CHAPTER 04 / EVERYBODY WENT VIRAL</div>
+      </div>
+      <div>
+        <h3 class="era-title">The world was watching.</h3>
+        <p class="era-copy">Lockdown creativity, TikTok trends, viral sounds, skit makers, social movements and a new generation of internet personalities.</p>
+        <div class="era-tags"><span class="tag">TIKTOK</span><span class="tag">SKITS</span><span class="tag">#ENDSARS</span><span class="tag">VIRAL SOUNDS</span></div>
+        <button class="era-detail">EXPLORE THIS ERA +</button>
+        <div class="era-extra">An era when digital platforms became even more central to everyday life. Entertainment, conversations, activism and creativity moved rapidly across social media.</div>
+      </div>
+    </article>
+
+    <article class="era reveal">
+      <div>
+        <div class="era-year">2023—26</div>
+        <div class="era-sub">CHAPTER 05 / THE NEW INTERNET</div>
+      </div>
+      <div>
+        <h3 class="era-title">New slang. New rules.</h3>
+        <p class="era-copy">Gen Z expressions, evolving Afrobeats, TikTok personalities, new meme formats, AI-assisted creativity and a culture that reinvents itself daily.</p>
+        <div class="era-tags"><span class="tag">GEN Z</span><span class="tag">AFROBEATS</span><span class="tag">AI CULTURE</span><span class="tag">TRENDS</span></div>
+        <button class="era-detail">EXPLORE THIS ERA +</button>
+        <div class="era-extra">The archive continues to grow. This chapter documents the present while preserving the trends, language and creative expressions shaping Nigerian internet culture.</div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="dark-band" id="culture">
+  <div class="section-label reveal">02 / THE CULTURE</div>
+  <h2 class="section-heading reveal">MORE THAN<br>JUST <em>MEMES.</em></h2>
+  <p class="section-intro reveal">A culture cannot be told through one lens. Explore the different worlds that make up the Nigerian experience.</p>
+
+  <div class="category-grid">
+    <a class="category reveal" href="#archive" data-category="Memes">
+      <div class="category-number">01 / HUMOUR</div>
+      <div class="category-icon">◉</div>
+      <h3>Meme Culture</h3>
+      <p>The reactions, screenshots and jokes that took over our timelines.</p>
+      <span class="category-arrow">↗</span>
+    </a>
+    <a class="category reveal delay-1" href="#archive" data-category="Music">
+      <div class="category-number">02 / SOUND</div>
+      <div class="category-icon">♫</div>
+      <h3>Music</h3>
+      <p>From legendary sounds to the songs that defined entire generations.</p>
+      <span class="category-arrow">↗</span>
+    </a>
+    <a class="category reveal delay-2" href="#archive" data-category="Comedy">
+      <div class="category-number">03 / ENTERTAINMENT</div>
+      <div class="category-icon">✳</div>
+      <h3>Comedy</h3>
+      <p>Creators, skits and characters that made us laugh.</p>
+      <span class="category-arrow">↗</span>
+    </a>
+    <a class="category reveal" href="#archive" data-category="Slang">
+      <div class="category-number">04 / LANGUAGE</div>
+      <div class="category-icon">Aa</div>
+      <h3>Naija Slang</h3>
+      <p>The words and expressions that became part of our identity.</p>
+      <span class="category-arrow">↗</span>
+    </a>
+    <a class="category reveal delay-1" href="#archive" data-category="Pop Culture">
+      <div class="category-number">05 / PEOPLE</div>
+      <div class="category-icon">✧</div>
+      <h3>Pop Culture</h3>
+      <p>Celebrity moments, entertainment and conversations.</p>
+      <span class="category-arrow">↗</span>
+    </a>
+    <a class="category reveal delay-2" href="#archive" data-category="Viral Moments">
+      <div class="category-number">06 / HISTORY</div>
+      <div class="category-icon">⌁</div>
+      <h3>Viral Moments</h3>
+      <p>The events that made everybody stop and pay attention.</p>
+      <span class="category-arrow">↗</span>
+    </a>
+  </div>
+</section>
+
+<section class="archive-section" id="archive">
+  <div class="archive-top reveal">
+    <div>
+      <div class="section-label">03 / THE COLLECTION</div>
+      <h2 class="section-heading">THE <em>ARCHIVE.</em></h2>
+      <p class="section-intro">A growing collection of the moments, sounds and expressions worth remembering.</p>
+    </div>
+    <div class="intro-number">03</div>
+  </div>
+
+  <div class="filters reveal">
+    <button class="filter active" data-filter="All">ALL</button>
+    <button class="filter" data-filter="Memes">MEMES</button>
+    <button class="filter" data-filter="Music">MUSIC</button>
+    <button class="filter" data-filter="Comedy">COMEDY</button>
+    <button class="filter" data-filter="Slang">SLANG</button>
+    <button class="filter" data-filter="Pop Culture">POP CULTURE</button>
+    <button class="filter" data-filter="Viral Moments">VIRAL MOMENTS</button>
+  </div>
+
+  <div class="archive-grid" id="archiveGrid">
+    <article class="archive-card" data-type="Music">
+      <div class="card-meta"><span>MUSIC</span><span>2010s</span></div>
+      <div class="card-art">01.</div>
+      <div><h3>The Afrobeats Wave</h3><p>A new era of Nigerian music, sound and global recognition.</p></div>
+    </article>
+    <article class="archive-card" data-type="Comedy">
+      <div class="card-meta"><span>COMEDY</span><span>2010s</span></div>
+      <div class="card-art">02.</div>
+      <div><h3>The Skit Revolution</h3><p>Short-form Nigerian comedy finds a massive online audience.</p></div>
+    </article>
+    <article class="archive-card" data-type="Memes">
+      <div class="card-meta"><span>MEMES</span><span>2016—19</span></div>
+      <div class="card-art">03.</div>
+      <div><h3>Twitter NG Banter</h3><p>Inside jokes, savage replies and unforgettable online conversations.</p></div>
+    </article>
+    <article class="archive-card" data-type="Viral Moments">
+      <div class="card-meta"><span>VIRAL MOMENTS</span><span>2020</span></div>
+      <div class="card-art">04.</div>
+      <div><h3>#EndSARS</h3><p>A defining moment of digital activism and Nigerian public conversation.</p></div>
+    </article>
+    <article class="archive-card" data-type="Slang">
+      <div class="card-meta"><span>SLANG</span><span>ALL ERAS</span></div>
+      <div class="card-art">05.</div>
+      <div><h3>The Naija Dictionary</h3><p>Expressions, street language and words that travel across generations.</p></div>
+    </article>
+    <article class="archive-card" data-type="Pop Culture">
+      <div class="card-meta"><span>POP CULTURE</span><span>2020s</span></div>
+      <div class="card-art">06.</div>
+      <div><h3>The New Generation</h3><p>Creators, personalities and the culture shaping today's internet.</p></div>
+    </article>
+  </div>
+  <div class="empty-message" id="emptyMessage">NO COLLECTIONS IN THIS CATEGORY YET.</div>
+</section>
+
+<section class="quote-section">
+  <div class="quote-mark reveal">“</div>
+  <blockquote class="reveal">
+    The internet forgets nothing.<br>
+    But <em>we remember everything.</em>
+  </blockquote>
+  <div class="quote-caption reveal">THE NAIJA ARCHIVE / OUR COLLECTIVE MEMORY</div>
+</section>
+
+<section class="final-section" id="about">
+  <div class="section-label reveal">04 / THIS IS OUR STORY</div>
+  <h2 class="reveal">WE WERE<br>ALL <span>THERE.</span></h2>
+  <p class="reveal">Every generation leaves something behind. A sound, a joke, a phrase, a moment. This is our attempt to preserve the culture, one memory at a time.</p>
+  <div class="reveal">
+    <a href="#timeline" class="primary-btn">REVISIT THE JOURNEY ↗</a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div>© 2026 <strong>THE NAIJA ARCHIVE.</strong></div>
+  <div>MADE WITH CULTURE. BUILT TO REMEMBER.</div>
+  <a href="#home">BACK TO TOP ↑</a>
+</footer>
+
+<script>
+const header = document.getElementById('header');
+const progress = document.getElementById('progress');
+const nav = document.getElementById('nav');
+
+function updateScroll() {
+  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+  const amount = scrollable > 0 ? window.scrollY / scrollable * 100 : 0;
+  progress.style.width = amount + '%';
+  header.classList.toggle('scrolled', window.scrollY > 40);
+}
+window.addEventListener('scroll', updateScroll, {passive:true});
+updateScroll();
+
+document.getElementById('menuBtn').addEventListener('click', () => {
+  nav.classList.toggle('open');
+});
+nav.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => nav.classList.remove('open'));
+});
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, {threshold:0.12});
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+document.querySelectorAll('.era-detail').forEach(button => {
+  button.addEventListener('click', () => {
+    const detail = button.nextElementSibling;
+    const isOpen = detail.classList.toggle('open');
+    button.textContent = isOpen ? 'CLOSE THIS ERA −' : 'EXPLORE THIS ERA +';
+  });
+});
+
+const filterButtons = document.querySelectorAll('.filter');
+const archiveCards = document.querySelectorAll('.archive-card');
+const emptyMessage = document.getElementById('emptyMessage');
+
+function filterArchive(category) {
+  let count = 0;
+  archiveCards.forEach(card => {
+    const match = category === 'All' || card.dataset.type === category;
+    card.style.display = match ? 'flex' : 'none';
+    if (match) count++;
+  });
+  emptyMessage.style.display = count ? 'none' : 'block';
+  filterButtons.forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.filter === category);
+  });
+}
+
+filterButtons.forEach(button => {
+  button.addEventListener('click', () => filterArchive(button.dataset.filter));
+});
+
+document.querySelectorAll('.category[data-category]').forEach(card => {
+  card.addEventListener('click', () => {
+    const category = card.dataset.category;
+    filterArchive(category);
+  });
+});
+
+document.body.classList.remove('loading');
+</script>
+</body>
+</html>
